@@ -41,5 +41,39 @@ router.get('/:code', async function (req, res, next) {
             WHERE comp_code = $1`,
             [code]
         );
+
+        if (compResult.rows.lenght === 0) {
+            throw new ExpressError(`No such company : ${code}`, 404)
+        }
+        const company = compResult.row[0];
+        const invoices = invResult.rows;
+
+        return res.json({'company': company});
     }
-})
+
+    catch (err) {
+        return next(err);
+    }
+});
+
+// Post / => add new company
+
+router.post('/', async function (req, res, next) {
+    try {
+        let {name, description} = req.body;
+        let code = slugify(name, {lower: true});
+
+        const result = await db.query(
+            `INSERT INTO companies (code, name, description)
+            VALUES ($1, $2, $3)
+            RETURNING code, name, description`,
+            [code, name, description]
+        );
+
+        return res.status(201).json({'company': result.rows[0]});
+    }
+
+    catch (err) {
+        return next(err);
+    }
+});
