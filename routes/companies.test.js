@@ -76,3 +76,54 @@ describe("POST /", function () {
         expect(response.status).toEqual(500);
     })
 });
+
+
+describe("PUT /", function () {
+    
+    test("It should update company", async function () {
+        const response = await request(app)
+           .put("/companies/apple")
+           .send({name: "AppleEdit", description: "NewDescription"});
+
+        expect(response.body).toEqual(
+            {
+                "company": {
+                    code: "apple",
+                    name: "AppleEdit",
+                    description: "NewDescrip"
+                }
+            }
+        );
+    });
+
+test("It should return 404 for no-such-comp", async function () {
+    const response = await request(app)
+      .put("/companies/blargh")
+      .send({name: "Blargh"})
+
+    expect(response.status).toEqual(404);
+});
+
+test("It should return 500 for missing data", async function () {
+    const response = await request(app)
+       .put("/companies/apple")
+       .send({});
+})
+});
+
+describe("DELETE /", function () {
+
+    test("It should delete company", async function () {
+        const response = await request(app)
+          .delete("/companies/apple");
+
+        expect(response.body).toEqual({"status": "deleted"});
+    });
+
+    test("It should return 404 for no-such-comp", async function () {
+        const response = await request(app)
+          .delete("/companies/blargh");
+
+        expect(response.status).toEqual(404);
+    });
+});
