@@ -125,5 +125,7 @@ describe("DELETE /", async function () {
     test("It should return 404 for no-such-invoices", async function () {
         const response = await request(app)
             .delete("/invoices/999");
+
+        expect(response.status).toEqual(404);    
     });
 });
