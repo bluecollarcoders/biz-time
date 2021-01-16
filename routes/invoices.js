@@ -107,7 +107,7 @@ router.put('/:id', async function (req, res, next) {
             throw new ExpressError(`No such invoice: ${id}`, 404);
         }
 
-        const currPaidDate = currResult.rows.[0].paid_date;
+        const currPaidDate = currResult.rows[0].paid_date;
 
         if (!currPaidDate && paid) {
             paidDate = new Date();

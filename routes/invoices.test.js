@@ -76,3 +76,38 @@ describe("POST /", function () {
     });
 });
 
+describe("PUT /", function () {
+
+    test("It should update an invoice", async function () {
+        const response = await request(app)
+           .put("/invoice/1")
+           .send({amt: 1000, paid: false});
+
+        expect(response.body).toEqual(
+            {
+                "invoice": {
+                    id: 1,
+                    comp_code: 'apple',
+                    paid: false,
+                    amt: 1000,
+                    add_date: expect.any(String),
+                    paid_date: null,
+                }
+            }
+        );   
+    });
+
+    test("It should return 404 for no-such-invoice", async function () {
+        const response = await request(app)
+           .put("/invoices/9999")
+           .send({amt: 1000});
+
+        expect(response.status).toEqual(404);   
+    });
+
+    test("It should return 500 for missing data", async function () {
+        const response = await request(app)
+           .put("/invoices/1")
+           .send({amt: 1000});
+    })
+});
