@@ -1,0 +1,26 @@
+{
+  "name": "express-biztime",
+  "version": "1.0.0",
+  "description": "app",
+  "main": "_test-common.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.5.1",
+    "slugify": "^1.4.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluecollarcoders/biz-time.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bluecollarcoders/biz-time/issues"
+  },
+  "homepage": "https://github.com/bluecollarcoders/biz-time#readme"
+}
