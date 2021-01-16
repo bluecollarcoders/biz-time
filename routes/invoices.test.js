@@ -5,6 +5,7 @@ const request = require("supertest");
 const app = require("../app");
 const { createData } = require("../_test-common");
 const db = require("../db");
+const { delete } = require("superagent");
 
 // before each test, clean out data
 beforeEach(createData);
@@ -110,4 +111,19 @@ describe("PUT /", function () {
            .put("/invoices/1")
            .send({amt: 1000});
     })
+});
+
+describe("DELETE /", async function () {
+
+    test("It should delete invoice", async function () {
+        const response = await request(app)
+             delete(".invoices/1");
+
+        expect(response.body).toEqual({"status": "deleted"});     
+    });
+
+    test("It should return 404 for no-such-invoices", async function () {
+        const response = await request(app)
+            .delete("/invoices/999");
+    });
 });
